@@ -25,7 +25,6 @@ public class TldClickController {
     }
 
     @GetMapping("/getURL")
-    @ResponseBody
     public String getTldClick() {
         List<Link> myLink = linkDAO.findAll();
         for (Link link : myLink) {
@@ -34,7 +33,7 @@ public class TldClickController {
 
 
 
-        return urlShortener.getShortURL();
+        return "main";
     }
 
 }
