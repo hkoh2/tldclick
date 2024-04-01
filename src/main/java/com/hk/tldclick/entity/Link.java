@@ -2,6 +2,7 @@ package com.hk.tldclick.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class Link {
     private String linkKey;
 
     @Column(name="created_by")
-    private String createdBy;
+    private Integer createdBy;
 
     @Column(name="expiration")
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,16 +32,23 @@ public class Link {
 
     @Column(name="created")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
+    private Timestamp created;
 
     @Column(name="deleted")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deleted;
+    private Timestamp deleted;
 
     public Link() {
     }
 
-    public Link(String link, String key, String createdBy, Date expiration, boolean active, Date created, Date deleted) {
+    public Link(String link, String linkKey, Integer createdBy, Timestamp expiration) {
+        this.link = link;
+        this.linkKey = linkKey;
+        this.createdBy = createdBy;
+        this.expiration = expiration;
+    }
+
+    public Link(String link, String key, Integer createdBy, Timestamp expiration, boolean active, Timestamp created, Timestamp deleted) {
         this.link = link;
         this.linkKey = key;
         this.createdBy = createdBy;
@@ -74,11 +82,11 @@ public class Link {
         this.linkKey = linkKey;
     }
 
-    public String getCreatedBy() {
+    public Integer getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -102,7 +110,7 @@ public class Link {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
@@ -110,7 +118,7 @@ public class Link {
         return deleted;
     }
 
-    public void setDeleted(Date deleted) {
+    public void setDeleted(Timestamp deleted) {
         this.deleted = deleted;
     }
 
@@ -119,8 +127,8 @@ public class Link {
         return "Link{" +
                 "id=" + id +
                 ", link='" + link + '\'' +
-                ", key='" + linkKey + '\'' +
-                ", createdBy='" + createdBy + '\'' +
+                ", linkKey='" + linkKey + '\'' +
+                ", createdBy=" + createdBy +
                 ", expiration=" + expiration +
                 ", active=" + active +
                 ", created=" + created +

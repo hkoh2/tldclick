@@ -3,6 +3,7 @@ package com.hk.tldclick.dao;
 import com.hk.tldclick.entity.Link;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,8 +20,9 @@ public class LinkDAOImpl implements LinkDAO {
     }
 
     @Override
+    @Transactional
     public void save(Link link) {
-
+        entityManager.persist(link);
     }
 
     @Override
