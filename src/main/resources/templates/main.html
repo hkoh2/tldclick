@@ -21,6 +21,16 @@
     <h2>Welcome</h2>
     <p><span th:text="${myText}"></span></p>
 </div>
+<div>
+    <form th:action="@{/api/create}" method="POST">
+        <!--
+        URL:
+        <input type="text" th:field="*{link}" />
+        -->
+
+        <input type="submit" value="Submit" />
+    </form>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

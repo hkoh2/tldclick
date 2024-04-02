@@ -26,7 +26,7 @@ public class TldClickController {
         this.linkDAO = linkDAO;
     }
 
-    @GetMapping("/getURL")
+    @GetMapping("/main")
     public String getTldClick(Model model) {
         List<Link> myLink = linkDAO.findAll();
         for (Link link : myLink) {
@@ -35,14 +35,14 @@ public class TldClickController {
 
         String val = "This is my text";
         model.addAttribute("myText", val);
+        // model.addAttribute("link, link");
 
 
         return "main";
     }
 
     @PostMapping("/create")
-    @ResponseBody
-    public String createLink() {
+    public String createLink(Model model) {
         String fullLink = "full link";
         String linkKey = "1234567";
         Integer createdBy = 1010;
@@ -52,7 +52,9 @@ public class TldClickController {
         link.setDeleted(expiration);
         linkDAO.save(link);
 
-        return link.toString();
+        model.addAttribute("link", link);
+
+        return "create-confirm";
 
     }
 
