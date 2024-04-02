@@ -22,11 +22,11 @@
     <p><span th:text="${myText}"></span></p>
 </div>
 <div>
-    <form th:action="@{/api/create}" method="POST">
-        <!--
+    <form th:action="@{/api/create}" th:object="${link}" method="POST">
         URL:
         <input type="text" th:field="*{link}" />
-        -->
+
+        <br></br>
 
         <input type="submit" value="Submit" />
     </form>

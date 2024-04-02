@@ -46,6 +46,7 @@ public class Link {
         this.linkKey = linkKey;
         this.createdBy = createdBy;
         this.expiration = expiration;
+        this.active = true;
     }
 
     public Link(String link, String key, Integer createdBy, Timestamp expiration, boolean active, Timestamp created, Timestamp deleted) {

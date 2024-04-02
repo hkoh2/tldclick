@@ -35,14 +35,14 @@ public class TldClickController {
 
         String val = "This is my text";
         model.addAttribute("myText", val);
-        // model.addAttribute("link, link");
+        model.addAttribute("link", new Link());
 
 
         return "main";
     }
 
     @PostMapping("/create")
-    public String createLink(Model model) {
+    public String createLink(@ModelAttribute("link") Link submittedLink, Model model) {
         String fullLink = "full link";
         String linkKey = "1234567";
         Integer createdBy = 1010;
@@ -50,9 +50,17 @@ public class TldClickController {
         Link link = new Link(fullLink, linkKey, createdBy, expiration);
         link.setCreated(expiration);
         link.setDeleted(expiration);
-        linkDAO.save(link);
 
-        model.addAttribute("link", link);
+        System.out.println("submitted: " + submittedLink);
+        submittedLink.setLinkKey(linkKey);
+        submittedLink.setCreatedBy(1234);
+        submittedLink.setExpiration(expiration);
+        submittedLink.setCreated(expiration);
+        submittedLink.setDeleted(expiration);
+        submittedLink.setActive(true);
+        linkDAO.save(submittedLink);
+
+        model.addAttribute("link", submittedLink);
 
         return "create-confirm";
 
