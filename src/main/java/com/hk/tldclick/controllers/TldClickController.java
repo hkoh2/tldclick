@@ -27,7 +27,7 @@ public class TldClickController {
         this.linkDAO = linkDAO;
     }
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String getTldClick(Model model) {
         List<Link> myLink = linkDAO.findAll();
         for (Link link : myLink) {
@@ -37,10 +37,6 @@ public class TldClickController {
         String val = "This is my text";
         model.addAttribute("myText", val);
         model.addAttribute("link", new Link());
-
-        // KeyGenerator keyGen = new KeyGenerator();
-        // String generatedKey = keyGen.generateKey();
-
 
         return "main";
     }
@@ -76,8 +72,6 @@ public class TldClickController {
 
     @GetMapping("/{key}")
     public String reroute(@PathVariable String key, Model model) {
-        System.out.println("key");
-        System.out.println(key);
         Link link = linkDAO.findByKey(key);
         if (link == null) {
             model.addAttribute("fullLink", "ERROR");

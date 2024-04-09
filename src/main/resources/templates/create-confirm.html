@@ -11,14 +11,17 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">TLDClick</a>
-
+        <a class="navbar-brand" href="/">TLDClick</a>
+        <a class="navlink" href="https://github.com/hkoh2/tldclick">github</a>
     </div>
 </nav>
 <div class="container-fluid">
     Link created
-    <p><a th:href="${link}"><span th:text="${link}"></span></a></p>
+    <p><a th:href="${link}"><span th:text="${link}" id="new-link"></span></a></p>
+    <button class="btn btn-primary top-margin" id="copy" onclick="copyLink()">COPY</button>
+    <p id="copy-msg"></p>
 
 </div>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
