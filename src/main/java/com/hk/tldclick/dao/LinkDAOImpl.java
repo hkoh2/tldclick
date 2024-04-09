@@ -25,6 +25,13 @@ public class LinkDAOImpl implements LinkDAO {
         entityManager.persist(link);
     }
 
+    @Transactional
+    public Integer saveAndGetId(Link link) {
+        entityManager.persist(link);
+        entityManager.flush();
+        return link.getId();
+    }
+
     @Override
     public Link findById(Integer id) {
         return null;

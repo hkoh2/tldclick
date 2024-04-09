@@ -1,5 +1,6 @@
 package com.hk.tldclick.controllers;
 
+import com.hk.tldclick.common.KeyGenerator;
 import com.hk.tldclick.common.URLShortener;
 import com.hk.tldclick.dao.LinkDAO;
 import com.hk.tldclick.entity.Link;
@@ -14,7 +15,7 @@ import java.util.List;
 
 // @RestController
 @Controller
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class TldClickController {
 
     private URLShortener urlShortener;
@@ -37,6 +38,9 @@ public class TldClickController {
         model.addAttribute("myText", val);
         model.addAttribute("link", new Link());
 
+        // KeyGenerator keyGen = new KeyGenerator();
+        // String generatedKey = keyGen.generateKey();
+
 
         return "main";
     }
@@ -58,9 +62,17 @@ public class TldClickController {
         submittedLink.setCreated(expiration);
         submittedLink.setDeleted(expiration);
         submittedLink.setActive(true);
-        linkDAO.save(submittedLink);
+        int id = linkDAO.saveAndGetId(submittedLink);
 
+        KeyGenerator keyGen = new KeyGenerator();
+        String generatedKey = keyGen.generateKey(id);
+
+        model.addAttribute("key", generatedKey);
+        model.addAttribute("id", id);
         model.addAttribute("link", submittedLink);
+
+        // ABCDEFGHIJKLM
+        // 1234556789012
 
         return "create-confirm";
 

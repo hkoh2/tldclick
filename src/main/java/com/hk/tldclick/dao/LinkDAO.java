@@ -11,5 +11,6 @@ public interface LinkDAO {
     List<Link> findById();
     void update(Link theLink);
     void delete(Integer Id);
+    Integer saveAndGetId(Link theLink);
 
 }
