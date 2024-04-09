@@ -48,7 +48,7 @@ public class TldClickController {
     @PostMapping("/create")
     public String createLink(@ModelAttribute("link") Link submittedLink, Model model) {
         String fullLink = "full link";
-        String linkKey = "1234567";
+        String linkKey = "";
         Integer createdBy = 1010;
         Timestamp expiration = Timestamp.from(Instant.now());
         Link link = new Link(fullLink, linkKey, createdBy, expiration);
@@ -62,20 +62,30 @@ public class TldClickController {
         submittedLink.setCreated(expiration);
         submittedLink.setDeleted(expiration);
         submittedLink.setActive(true);
-        int id = linkDAO.saveAndGetId(submittedLink);
+        String generatedKey = linkDAO.saveAndGetId(submittedLink);
+        String fullURL = "http://localhost:8080/" + generatedKey;
 
-        KeyGenerator keyGen = new KeyGenerator();
-        String generatedKey = keyGen.generateKey(id);
 
         model.addAttribute("key", generatedKey);
-        model.addAttribute("id", id);
-        model.addAttribute("link", submittedLink);
+        model.addAttribute("link", fullURL);
 
-        // ABCDEFGHIJKLM
-        // 1234556789012
 
         return "create-confirm";
 
+    }
+
+    @GetMapping("/{key}")
+    public String reroute(@PathVariable String key, Model model) {
+        System.out.println("key");
+        System.out.println(key);
+        Link link = linkDAO.findByKey(key);
+        if (link == null) {
+            model.addAttribute("fullLink", "ERROR");
+            System.out.println("ERROR");
+        } else {
+            model.addAttribute("fullLink", link.getLink());
+        }
+        return "reroute";
     }
 
 }

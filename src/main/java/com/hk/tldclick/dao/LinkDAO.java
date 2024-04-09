@@ -9,8 +9,9 @@ public interface LinkDAO {
     Link findById(Integer id);
     List<Link> findAll();
     List<Link> findById();
+    Link findByKey(String key);
     void update(Link theLink);
     void delete(Integer Id);
-    Integer saveAndGetId(Link theLink);
+    String saveAndGetId(Link theLink);
 
 }

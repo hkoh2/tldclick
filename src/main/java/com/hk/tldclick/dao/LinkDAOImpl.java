@@ -1,5 +1,6 @@
 package com.hk.tldclick.dao;
 
+import com.hk.tldclick.common.KeyGenerator;
 import com.hk.tldclick.entity.Link;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -26,10 +27,21 @@ public class LinkDAOImpl implements LinkDAO {
     }
 
     @Transactional
-    public Integer saveAndGetId(Link link) {
+    public String saveAndGetId(Link link) {
         entityManager.persist(link);
         entityManager.flush();
-        return link.getId();
+        int id = link.getId();
+        KeyGenerator keyGenerator = new KeyGenerator();
+        String linkKey = keyGenerator.generateKey(id);
+        link.setLinkKey(linkKey);
+        entityManager.merge(link);
+        return linkKey;
+    }
+
+    @Transactional
+    public void updateLink(Link link) {
+        entityManager.merge(link);
+
     }
 
     @Override
@@ -41,6 +53,16 @@ public class LinkDAOImpl implements LinkDAO {
     public List<Link> findAll() {
         TypedQuery<Link> linkQuery = entityManager.createQuery("FROM Link", Link.class);
         return linkQuery.getResultList();
+    }
+
+    @Override
+    public Link findByKey(String key) {
+        TypedQuery<Link> linkQuery = entityManager.createQuery("FROM Link WHERE linkKey=:key", Link.class);
+        linkQuery.setParameter("key", key);
+        if (linkQuery.getResultList().isEmpty()) {
+            return null;
+        }
+        return linkQuery.getResultList().get(0);
     }
 
     @Override
