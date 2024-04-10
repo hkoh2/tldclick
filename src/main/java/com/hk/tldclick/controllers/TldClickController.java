@@ -1,6 +1,5 @@
 package com.hk.tldclick.controllers;
 
-import com.hk.tldclick.common.KeyGenerator;
 import com.hk.tldclick.common.URLShortener;
 import com.hk.tldclick.dao.LinkDAO;
 import com.hk.tldclick.entity.Link;
@@ -15,7 +14,6 @@ import java.util.List;
 
 // @RestController
 @Controller
-//@RequestMapping("/api")
 public class TldClickController {
 
     private URLShortener urlShortener;
@@ -61,25 +59,28 @@ public class TldClickController {
         String generatedKey = linkDAO.saveAndGetId(submittedLink);
         String fullURL = "http://localhost:8080/" + generatedKey;
 
-
         model.addAttribute("key", generatedKey);
         model.addAttribute("link", fullURL);
-
 
         return "create-confirm";
 
     }
 
-    @GetMapping("/{key}")
+    @GetMapping("/{key:.{7}}")
     public String reroute(@PathVariable String key, Model model) {
         Link link = linkDAO.findByKey(key);
+        System.out.println("key: " + key);
+        System.out.println("link in reroute: " + link);
         if (link == null) {
             model.addAttribute("fullLink", "ERROR");
             System.out.println("ERROR");
+            return "error";
         } else {
-            model.addAttribute("fullLink", link.getLink());
+            String rawLink = link.getLink();
+            if (!rawLink.startsWith("http")) {
+                return "redirect:https://" + rawLink;
+            }
+            return "redirect:" + rawLink;
         }
-        return "reroute";
     }
-
 }

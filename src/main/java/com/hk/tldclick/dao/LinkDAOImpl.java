@@ -59,9 +59,11 @@ public class LinkDAOImpl implements LinkDAO {
     public Link findByKey(String key) {
         TypedQuery<Link> linkQuery = entityManager.createQuery("FROM Link WHERE linkKey=:key", Link.class);
         linkQuery.setParameter("key", key);
+        List<Link> results = linkQuery.getResultList();
         if (linkQuery.getResultList().isEmpty()) {
             return null;
         }
+
         return linkQuery.getResultList().get(0);
     }
 
