@@ -10,12 +10,13 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">TLDClick</a>
+        <h1><a class="navbar-brand" href="/">TLDClick</a></h1>
         <a class="navlink" href="https://github.com/hkoh2/tldclick">github</a>
     </div>
 </nav>
-<div class="container-fluid">
+<div class="container-fluid text-center padding-top">
 
+    <div class="col-lg-6 mx-auto">
         <form th:action="@{/create}" th:object="${link}" method="POST">
             <div class="form-group">
                 <label class="top-margin" for="linkInput">Enter URL to shorten!</label>
@@ -25,6 +26,8 @@
 
             <input type="submit" class="btn btn-primary top-margin" value="Submit" />
         </form>
+
+    </div>
 
 </div>
 
