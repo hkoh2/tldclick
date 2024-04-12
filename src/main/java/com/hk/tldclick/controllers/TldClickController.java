@@ -4,8 +4,10 @@ import com.hk.tldclick.common.URLShortener;
 import com.hk.tldclick.dao.LinkDAO;
 import com.hk.tldclick.entity.Link;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -23,6 +25,12 @@ public class TldClickController {
     public TldClickController(URLShortener urlShortener, LinkDAO linkDAO) {
         this.urlShortener = urlShortener;
         this.linkDAO = linkDAO;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
     @GetMapping("/")
